@@ -17,6 +17,15 @@ config :shout_api, ShoutApi.Endpoint,
   pubsub: [name: ShoutApi.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
+config :guardian, Guardian,
+  allowed_algos: ["HS512"], # optional
+  verify_module: Guardian.JWT,  # optional
+  issuer: "ShoutApi",
+  ttl: { 30, :days },
+  verify_issuer: true, # optional
+  secret_key: "7sNzMB2MRIEcU1Qa5RTcdHtrC3iDFAY41McBUrpDJ5r+tjYT9Vi2OyvbobJKh39B",
+  serializer: ShoutApi.GuardianSerializer
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

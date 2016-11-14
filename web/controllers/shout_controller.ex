@@ -1,12 +1,14 @@
 defmodule ShoutApi.ShoutController do
   use ShoutApi.Web, :controller
 
+  plug Guardian.Plug.EnsureAuthenticated, handler: __MODULE__
+
   alias ShoutApi.Shout
 
-  def index(conn, _params) do
-    shouts = Repo.all(Shout)
-    render(conn, "index.json", shouts: shouts)
-  end
+  # def index(conn, _params) do
+  #   shouts = Repo.all(Shout)
+  #   render(conn, "index.json", shouts: shouts)
+  # end
 
   def create(conn, %{"shout" => shout_params}) do
     changeset = Shout.changeset(%Shout{}, shout_params)
@@ -15,7 +17,7 @@ defmodule ShoutApi.ShoutController do
       {:ok, shout} ->
         conn
         |> put_status(:created)
-        |> put_resp_header("location", shout_path(conn, :show, shout))
+        # |> put_resp_header("location", shout_path(conn, :show, shout))
         |> render("show.json", shout: shout)
       {:error, changeset} ->
         conn
@@ -51,5 +53,11 @@ defmodule ShoutApi.ShoutController do
     Repo.delete!(shout)
 
     send_resp(conn, :no_content, "")
+  end
+
+  def unauthenticated(conn, _params) do
+    conn
+    |> put_status(401)
+    |> render("error.json", message: "Authentication required")
   end
 end
