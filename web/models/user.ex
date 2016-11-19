@@ -37,7 +37,7 @@ defmodule ShoutApi.User do
     |> put_change(:password_hash, hashed_password)
   end
 
-  def find_and_confirm_password(%{"password" => password, "email" => email}) do
+  def find_and_confirm_password(%{ "user" => %{"password" => password, "email" => email}}) do
     verify_credentials(email, password)
   end
 
