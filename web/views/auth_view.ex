@@ -15,8 +15,8 @@ defmodule ShoutApi.AuthView do
     %{data: %{message: "Successfully logged out"}}
   end
 
-  def render("error.json", _assigns) do
-    "Could not create user"
+  def render("error.json", %{message: message}) do
+    %{message: message}
   end
 
   def render("user.json", %{user: user}) do

@@ -13,4 +13,8 @@ defmodule ShoutApi.ShoutView do
     %{id: shout.id,
       text: shout.text}
   end
+
+  def render("error.json", %{message: message}) do
+    %{data: %{message: message}}
+  end
 end
