@@ -37,7 +37,7 @@ defmodule ShoutApi.Router do
       get "/logout", AuthController, :logout
 
       resources "/users", UserController, only: [:update, :delete] do
-        resources "/shouts", ShoutController
+        resources "/shouts", ShoutController, only: [:index, :show, :create, :delete]
       end
     end
   end

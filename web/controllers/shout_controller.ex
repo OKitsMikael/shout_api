@@ -5,19 +5,19 @@ defmodule ShoutApi.ShoutController do
 
   alias ShoutApi.Shout
 
-  # def index(conn, _params) do
-  #   shouts = Repo.all(Shout)
-  #   render(conn, "index.json", shouts: shouts)
-  # end
+  def index(conn, %{"user_id" => user_id}) do
+    shouts = Repo.all(Shout)
+    render(conn, "index.json", shouts: shouts)
+  end
 
-  def create(conn, %{"shout" => shout_params}) do
+  def create(conn, %{"user_id" => id, "shout" => shout_params}) do
     changeset = Shout.changeset(%Shout{}, shout_params)
 
     case Repo.insert(changeset) do
       {:ok, shout} ->
         conn
         |> put_status(:created)
-        # |> put_resp_header("location", shout_path(conn, :show, shout))
+        # |> put_resp_header("location", user_shout_path(conn, :show, shout))
         |> render("show.json", shout: shout)
       {:error, changeset} ->
         conn
@@ -57,7 +57,13 @@ defmodule ShoutApi.ShoutController do
 
   def unauthenticated(conn, _params) do
     conn
-    |> put_status(401)
+    |> put_status(:unauthorized)
     |> render("error.json", message: "Authentication required")
+  end
+  
+  def no_resource(conn, _params) do
+    conn
+    |> put_status(:unprocessable_entity)
+    |> render("error.json", message: "Please log in")
   end
 end
