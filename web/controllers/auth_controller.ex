@@ -9,7 +9,7 @@ defmodule ShoutApi.AuthController do
          new_conn = Guardian.Plug.api_sign_in(conn, user)
          jwt = Guardian.Plug.current_token(new_conn)
          {:ok, claims} = Guardian.Plug.claims(new_conn)
-         exp = 
+         exp =
           claims
           |> Map.get("exp")
           |> Integer.to_string()
@@ -34,7 +34,7 @@ defmodule ShoutApi.AuthController do
          new_conn = Guardian.Plug.api_sign_in(conn, user)
          jwt = Guardian.Plug.current_token(new_conn)
          {:ok, claims} = Guardian.Plug.claims(new_conn)
-         exp = 
+         exp =
           claims
           |> Map.get("exp")
           |> Integer.to_string()
@@ -56,5 +56,4 @@ defmodule ShoutApi.AuthController do
     Guardian.revoke!(jwt, claims)
     render(conn, "logout.json")
   end
-  def logout(conn, _), do: render("error.json", message: "Error logging out, check jwt and claims")
 end

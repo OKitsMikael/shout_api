@@ -40,7 +40,8 @@ defmodule ShoutApi.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:guardian, "~> 0.14"},
-      {:comeonin, "~> 2.5"}
+      {:comeonin, "~> 2.5"},
+      {:ex_machina, "~> 1.0", only: :test}
     ]
   end
 
