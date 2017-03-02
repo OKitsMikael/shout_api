@@ -19,7 +19,7 @@ defmodule ShoutApi.Mixfile do
   def application do
     [mod: {ShoutApi, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :comeonin, :ex_machina]]
+                    :phoenix_ecto, :postgrex, :comeonin]]
   end
 
   # Specifies which paths to compile per environment.
@@ -41,7 +41,7 @@ defmodule ShoutApi.Mixfile do
       {:cowboy, "~> 1.0"},
       {:guardian, "~> 0.13.0"},
       {:comeonin, "~> 2.5"},
-      {:ex_machina, "~> 1.0"}
+      {:ex_machina, "~> 1.0", only: :test}
     ]
   end
 
